@@ -1,0 +1,46 @@
+
+fd = socket(2, 1)
+bind(fd, 0x402000, 0x10)
+listen(fd)
+0x402810 = accept(fd, 0, 0)
+pid = fork()
+if pid == 0 :
+    sigprocmask(0, 0x4030b1, 0)
+    read(0x402810, 0x402010, 0x4)
+    addr = 0x402010
+    addr -= 1
+    
+    do {
+        addr += 1
+        read(0x402810, addr, 0x1)
+        
+    } while  *(0x402010) != 0x20 :
+    
+    ## 0x4010b2
+    read(0x402810, 0x4028b1, 0x800)
+    ## 0x4010c6
+    write(0x402810, 0x40289e, 0x13)
+        
+    if *(0x402011) != 0x2d :
+        goto end
+    if *(0x402012) != 0x67 :
+        goto end
+    if *(0x402013) != 0x69 :
+        goto end
+    if *(0x402014) != 0x74 :
+        goto end
+        
+    bytesWritten = write(0x402810, 0x402880, *(0x402878) )
+    syscall(byteswritten - *(0x402878) + 3)
+    exit()
+
+end:
+    b = write(0x402810, 0x402820, *(0x402818) )
+    syscall(b - *(0x402818) + 3, 0x402820, *(0x402818), 0)
+    exit()
+else :
+    close(0x402810)
+
+
+        
+

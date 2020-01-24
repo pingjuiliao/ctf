@@ -1,0 +1,6 @@
+shellcode of 
+
+1. exact 30 bytes (0x1e bytes)
+2. No "\x90" , s
+3. char_xor(shellcode[:15], 15) == char_xor(shellcode[15:], 15)
+
